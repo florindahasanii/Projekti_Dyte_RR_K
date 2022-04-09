@@ -1,0 +1,12 @@
+Ketu po i listoj referencat ne te cilat jam orientuar si dhe burimet, ne cilat mund te gjendet kodi origjinal i punuar ne videot e cekura me poshte.
+
+Videot: 
+https://www.youtube.com/watch?v=cNdlrbZSkyQ - Server
+https://www.youtube.com/watch?v=fmn-pRvNaho - Client
+https://www.youtube.com/watch?v=dquxuXeZXgo - Multiple Clients
+
+
+Code:
+https://gist.github.com/codehoose/020c6213f481aee76ea9b096acaddfaf - Server
+https://gist.github.com/codehoose/d7dea7010d041d52fb0f59cbe3826036 - Client
+https://bitbucket.org/sloankelly/youtube-source-repository/src/39d0e0460016338163d43d9bc01d4a45b1826619/cpp/networking/MultipleClientsBarebonesServer/?at=master - Multiple Clients
