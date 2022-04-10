@@ -13,9 +13,10 @@
 #define CHANGEFILE "/Documents/FK/SEM-IV/RRK/Project2/clientA.cpp"
 using namespace std;
 
- 
+
 int main()
 {
+
     // Create a socket - Krijimi i nje socketi 
     int listening = socket(AF_INET, SOCK_STREAM, 0);
     if (listening == -1)
@@ -44,6 +45,7 @@ int main()
     // Wait for a connection - Pritja per nje lidhje 
     sockaddr_in client;
     socklen_t clientSize = sizeof(client);
+    cout<<"Presim nje lidhje ..."<<endl;
  
     int clientSocket = accept(listening, (sockaddr*)&client, &clientSize);
  
