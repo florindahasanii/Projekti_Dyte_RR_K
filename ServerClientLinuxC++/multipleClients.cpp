@@ -26,10 +26,12 @@ int main(int argc , char *argv[])
 	char buffer[1025]; //data buffer of 1K
 		
 	//set of socket descriptors
+	//nje set i socketeve
 	fd_set readfds;
 		
 	//a message
-	char *message = "ECHO Daemon v1.0 \r\n";
+	//Nje mesazh
+	char *message = "\r\n";
 	
 	//initialise all client_socket[] to 0 so not checked
 	for (i = 0; i < max_clients; i++)
@@ -44,8 +46,8 @@ int main(int argc , char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	//set master socket to allow multiple connections ,
-	//this is just a good habit, it will work without this
+	//set master socket to allow multiple connections // master socket lejon te kete shume lidhje
+	
 	if( setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,
 		sizeof(opt)) < 0 )
 	{
@@ -54,17 +56,19 @@ int main(int argc , char *argv[])
 	}
 	
 	//type of socket created
+	//lloji i socketit te krijuar 
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons( PORT );
 		
 	//bind the socket to localhost port 8888
+	// lidhja e socketit ne portin e localhostit 8888
 	if (bind(master_socket, (struct sockaddr *)&address, sizeof(address))<0)
 	{
 		perror("bind failed");
 		exit(EXIT_FAILURE);
 	}
-	printf("Listener on port %d \n", PORT);
+	printf("Po presim lidhje ne portin %d \n", PORT);
 		
 	//try to specify maximum of 3 pending connections for the master socket
 	if (listen(master_socket, 3) < 0)
@@ -74,19 +78,23 @@ int main(int argc , char *argv[])
 	}
 		
 	//accept the incoming connection
+	//Pranimi i konektimit qe po vjen
 	addrlen = sizeof(address);
-	puts("Waiting for connections ...");
+	puts("Duke pritur per nje lidhje ...");
 		
 	while(TRUE)
 	{
 		//clear the socket set
+		//pastrimi i socket stit
 		FD_ZERO(&readfds);
 	
 		//add master socket to set
+		//shtimi i masket socketit tek seti
 		FD_SET(master_socket, &readfds);
 		max_sd = master_socket;
 			
 		//add child sockets to set
+		// shtimi i socket femijes tek seti
 		for ( i = 0 ; i < max_clients ; i++)
 		{
 			//socket descriptor
@@ -122,25 +130,28 @@ int main(int argc , char *argv[])
 			}
 			
 			//inform user of socket number - used in send and receive commands
-			printf("New connection , socket fd is %d , ip is : %s , port : %d \n" , new_socket , inet_ntoa(address.sin_addr) , ntohs
+			//informo perdoruesin per socket numrin 
+			printf("Lidhje e re , pershkruesi i fajlit socket eshte %d , ip eshte : %s dhe porti : %d \n" , new_socket , inet_ntoa(address.sin_addr) , ntohs
 				(address.sin_port));
 		
 			//send new connection greeting message
+			// dergimi i mesazhit pershendetes tek lidhja e re 
 			if( send(new_socket, message, strlen(message), 0) != strlen(message) )
 			{
 				perror("send");
 			}
 				
-			puts("Welcome message sent successfully");
+			puts("Mesazhi u dergua me sukses!");
 				
 			//add new socket to array of sockets
+			// shtimi i nje socketi te ri ne vargun e socketeve
 			for (i = 0; i < max_clients; i++)
 			{
 				//if position is empty
 				if( client_socket[i] == 0 )
 				{
 					client_socket[i] = new_socket;
-					printf("Adding to list of sockets as %d\n" , i);
+					printf("Duke i'u shtuar vargut te socket-eve si %d\n" , i);
 						
 					break;
 				}
@@ -161,7 +172,7 @@ int main(int argc , char *argv[])
 					//Somebody disconnected , get his details and print
 					getpeername(sd , (struct sockaddr*)&address , \
 						(socklen_t*)&addrlen);
-					printf("Host disconnected , ip %s , port %d \n" ,
+					printf("Hosti u c'keput , ip %s , port %d \n" ,
 						inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
 						
 					//Close the socket and mark as 0 in list for reuse
