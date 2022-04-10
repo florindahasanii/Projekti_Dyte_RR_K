@@ -172,7 +172,7 @@ int main(int argc , char *argv[])
 					//Somebody disconnected , get his details and print
 					getpeername(sd , (struct sockaddr*)&address , \
 						(socklen_t*)&addrlen);
-					printf("Hosti u c'keput , ip %s , port %d \n" ,
+					printf("Klienti u c'keput , ip %s , port %d \n" ,
 						inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
 						
 					//Close the socket and mark as 0 in list for reuse
