@@ -1,5 +1,8 @@
 #include <iostream>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <map>
+#include <stdio.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -7,7 +10,9 @@
 #include <string.h>
 #include <string>
  
+#define CHANGEFILE "/Documents/FK/SEM-IV/RRK/Project2/clientA.cpp"
 using namespace std;
+
  
 int main()
 {
@@ -24,14 +29,18 @@ int main()
     hint.sin_family = AF_INET;
     hint.sin_port = htons(54000);
     inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
- 
+
+    chmod(CHANGEFILE, S_IRWXU|S_IRGRP|S_IXGRP|S_IROTH);
+
     bind(listening, (sockaddr*)&hint, sizeof(hint));
+  
  
+    
     // Tell Winsock the socket is for listening - Socketi po degjon 
     // Winsock - Windows Sockets API. Eshtë një ndërfaqe programimi aplikacioni që përcakton se si softueri i aplikacionit të rrjetit Windows 
     //duhet të aksesojë shërbimet e rrjetit, veçanërisht TCP/IP.
     listen(listening, SOMAXCONN);
- 
+    
     // Wait for a connection - Pritja per nje lidhje 
     sockaddr_in client;
     socklen_t clientSize = sizeof(client);
